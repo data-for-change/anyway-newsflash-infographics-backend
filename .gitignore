@@ -11,6 +11,11 @@
 # production
 /build
 
+# keys
+/config/keys.js
+
+# db file for storing users
+/config/db.json
 # misc
 .idea
 .DS_Store

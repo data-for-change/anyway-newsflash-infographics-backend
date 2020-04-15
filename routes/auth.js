@@ -7,8 +7,7 @@ router.get('/google-login',passport.authenticate('google', {
 
 
 router.get('/google-login/redirect', passport.authenticate('google'), (req, res) => {
-    console.log('redirect URI ');
-    res.send('user has been logged in!')
+    res.redirect('/profile');
 });
 
 

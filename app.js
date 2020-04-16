@@ -12,6 +12,8 @@ const cookieSession = require('cookie-session');
 const sessionKeys = require('./config/keys').session;
 const profileRouter = require('./routes/profile');
 const cors  = require('cors');
+const apiRouter = require('./routes/api');
+
 
 
 
@@ -39,6 +41,8 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/auth', authRouter);
 app.use('/profile',profileRouter);
+app.use('/api',apiRouter);
+
 
 
 // catch 404 and forward to error handler

@@ -10,5 +10,8 @@ router.get('/google-login/redirect', passport.authenticate('google'), (req, res)
     res.redirect('/profile');
 });
 
-
+router.get('/logout',(req,res)=>{
+req.logOut();
+res.redirect('/');
+});
 module.exports = router;

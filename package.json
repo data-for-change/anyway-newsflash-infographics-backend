@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start:dev": "NODE_ENV=development node ./bin/www",
-    "start:prod":"NODE_ENV=production node  ./bin/www"
+    "start:prod":"NODE_ENV=production node  ./bin/www",
+    "start":"node ./bin/www"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",

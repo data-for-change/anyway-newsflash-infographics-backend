@@ -4,6 +4,8 @@ const keys = require('./keys').google;
 const fs = require('fs');
 let dataFromDB = require('./db.json');
 
+const isProd = ()=> process.env.NODE_ENV === 'production';
+
 passport.serializeUser((user,done)=>{
    done(null,user.userId);
 });
@@ -18,8 +20,8 @@ passport.deserializeUser((id, done) => {
 
 passport.use(new GoogleStrategy({
         callbackURL: `${process.env.BASE_URL}:${process.env.PORT}/auth/google-login/redirect`,
-        clientID: keys.clientId,
-        clientSecret: keys.clientSecret
+        clientID: isProd()? process.env.GOOGLE_ID: keys.clientId,
+        clientSecret:  isProd()? process.env.GOOGLE_SECRET: keys.clientSecret
     },(accessToken,refreshToken,profile,done ) => {
         const userFromDB = dataFromDB.find((user)=> user.userId === profile.id);
         if(userFromDB!== undefined){

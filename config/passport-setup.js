@@ -1,10 +1,12 @@
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const keys = require('./keys').google;
 const fs = require('fs');
 let dataFromDB = require('./db.json');
+const keys = !isProd()?require('./keys').google :undefined;
 
-const isProd = ()=> process.env.NODE_ENV === 'production';
+function isProd() {
+    return process.env.NODE_ENV === 'production';
+}
 
 passport.serializeUser((user,done)=>{
    done(null,user.userId);

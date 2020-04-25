@@ -13,7 +13,6 @@
 
 # keys
 /config/keys.js
-
 # db file for storing users
 /config/db.json
 # misc

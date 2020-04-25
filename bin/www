@@ -1,8 +1,10 @@
 #!/usr/bin/env node
 
+
 /**
  * Module dependencies.
  */
+require('dotenv').config({ path: `../.env.${process.env.NODE_ENV}`});
 const app = require('../app');
 const debug = require('debug')('anyway-newsflash-infographics-backend:server');
 const http = require('http');

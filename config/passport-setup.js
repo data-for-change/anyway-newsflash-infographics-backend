@@ -1,7 +1,7 @@
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const fs = require('fs');
-let dataFromDB = require('./db.json');
+let dataFromDB = require('./../config/db.json');
 const keys = !isProd()?require('./keys').google :undefined;
 
 function isProd() {

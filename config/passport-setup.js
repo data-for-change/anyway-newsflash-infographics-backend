@@ -1,10 +1,15 @@
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const fs = require('fs');
-let dataFromDB = fs.existsSync('../config/db.json')?require('../config/db.json') :
-    fs.writeFileSync('../config/db.json','[]');
+let dataFromDB = fs.existsSync('../config/db.json') ?  require('../config/db.json') :
+    createNewDB();
 const keys = !isProd()?require('./keys').google :undefined;
 
+
+function createNewDB(){
+    fs.writeFileSync('../config/db.json','[]');
+    return [];
+}
 
 function isProd() {
     return process.env.NODE_ENV === 'production';

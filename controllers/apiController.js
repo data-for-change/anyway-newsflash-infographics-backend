@@ -20,11 +20,13 @@ const getDataFromApi = (url) => {
 function getInfographicForNewsflash(id, yearPeriod) {
     const timeRangeQuaryParam = yearPeriod != 0 ? apiConstants.yearsAgo + yearPeriod : '';
     const urlAsKey = apiConstants.infographicsQuery + id + timeRangeQuaryParam;
+    if(!dataCache.get(urlAsKey)) {
+        fetch(urlAsKey).then(res => res.json()).catch(err => console.log('error fetching url: ' + urlAsKey + ': ' + err))
+            .then(jsonObj => {
+                dataCache.set(urlAsKey, jsonObj);
 
-    fetch(urlAsKey).then(res => res.json()).catch(err => console.log('error fetching url: ' + urlAsKey + ': ' + err))
-        .then(jsonObj => {
-        dataCache.set(urlAsKey, jsonObj);
-    });
+            })
+    };
 }
 
 /**

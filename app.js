@@ -28,10 +28,10 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(cookieSession({
+/*app.use(cookieSession({
   maxAge:60*60*24*1000,
   keys:[sessionKeys.cookieKey]
-}));
+}));*/
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
 app.use(passport.session());

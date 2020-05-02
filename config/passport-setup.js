@@ -4,7 +4,7 @@ let usersList = new Map();
 const keys = !isProd()?require('./keys').google :undefined;
 
 
-function isProd() {
+module.exports.isProd = function isProd() {
     return process.env.NODE_ENV === 'production';
 }
 

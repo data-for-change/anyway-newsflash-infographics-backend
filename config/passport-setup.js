@@ -1,15 +1,8 @@
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const fs = require('fs');
-let dataFromDB = fs.existsSync('../config/db.json') ?  require('../config/db.json') :
-    createNewDB();
+let usersList = new Map();
 const keys = !isProd()?require('./keys').google :undefined;
 
-
-function createNewDB(){
-    fs.writeFileSync('../config/db.json','[]');
-    return [];
-}
 
 function isProd() {
     return process.env.NODE_ENV === 'production';
@@ -20,8 +13,7 @@ passport.serializeUser((user,done)=>{
 });
 
 passport.deserializeUser((id, done) => {
-    const users = JSON.parse(fs.readFileSync('../config/db.json'));
-    const fetchedUser =  users.find((user)=> user.userId === id)
+    const fetchedUser =  usersList.find((user)=> user.userId === id)
     done(null,fetchedUser);
 
 });
@@ -32,16 +24,16 @@ passport.use(new GoogleStrategy({
         clientID: isProd()? process.env.GOOGLE_ID: keys.clientId,
         clientSecret:  isProd()? process.env.GOOGLE_SECRET: keys.clientSecret
     },(accessToken,refreshToken,profile,done ) => {
-        const userFromDB = dataFromDB.find((user)=> user.userId === profile.id);
-        if(userFromDB!== undefined){
-            return done(null,userFromDB);
+        const userFromList = usersList.get(profile.id)
+        if(userFromList){
+            return done(null,userFromList);
         }
         else{
-            const newUser= {userId:profile.id,
+            const newUser= {
+                userId:profile.id,
                 userName:profile.displayName};
-            dataFromDB.push(newUser);
-            fs.writeFileSync('../config/db.json',JSON.stringify(dataFromDB));
-            return done(null,newUser)
+            usersList.put(newUser);
+            return done(null,newUser);
         }
     })
 );

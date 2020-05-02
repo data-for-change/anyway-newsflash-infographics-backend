@@ -3,20 +3,16 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-//const passportSetup = require('./config/passport-setup');
+const passportSetup = require('./config/passport-setup');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
-//const authRouter = require('./routes/auth');
+const authRouter = require('./routes/auth');
 const passport = require('passport');
-//const cookieSession = require('cookie-session');
-//const sessionKeys = require('./config/keys').session;
+const cookieSession = require('cookie-session');
+const sessionKeys = require('./config/keys').session;
 const profileRouter = require('./routes/profile');
 const cors  = require('cors');
 const apiRouter = require('./routes/api');
-
-
-
-
 const app = express();
 
 // view engine setup
@@ -28,10 +24,10 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-/*app.use(cookieSession({
+app.use(cookieSession({
   maxAge:60*60*24*1000,
   keys:[sessionKeys.cookieKey]
-}));*/
+}));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -39,7 +35,7 @@ app.use(passport.session());
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-//app.use('/auth', authRouter);
+app.use('/auth', authRouter);
 app.use('/profile',profileRouter);
 app.use('/api',apiRouter);
 

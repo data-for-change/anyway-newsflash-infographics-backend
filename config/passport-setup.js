@@ -20,7 +20,7 @@ passport.deserializeUser((id, done) => {
 
 
 passport.use(new GoogleStrategy({
-        callbackURL: `${process.env.BASE_URL}:${process.env.PORT}/auth/google-login/redirect`,
+        callbackURL: `${process.env.BASE_URL}:${isProd() ?'' : process.env.PORT}/auth/google-login/redirect`,
         clientID: isProd()? process.env.GOOGLE_ID: keys.clientId,
         clientSecret:  isProd()? process.env.GOOGLE_SECRET: keys.clientSecret
     },(accessToken,refreshToken,profile,done ) => {

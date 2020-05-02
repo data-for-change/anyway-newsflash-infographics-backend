@@ -4,7 +4,7 @@ let usersList = new Map();
 const keys = !isProd()?require('./keys').google :undefined;
 
 
-module.exports.isProd = function isProd() {
+function isProd() {
     return process.env.NODE_ENV === 'production';
 }
 
@@ -37,3 +37,5 @@ passport.use(new GoogleStrategy({
         }
     })
 );
+
+module.exports.isProd = isProd;

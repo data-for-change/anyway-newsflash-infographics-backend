@@ -13,7 +13,7 @@ passport.serializeUser((user,done)=>{
 });
 
 passport.deserializeUser((id, done) => {
-    const fetchedUser =  usersList.find((user)=> user.userId === id)
+    const fetchedUser =  usersList.get(id)
     done(null,fetchedUser);
 
 });
@@ -32,7 +32,7 @@ passport.use(new GoogleStrategy({
             const newUser= {
                 userId:profile.id,
                 userName:profile.displayName};
-            usersList.put(newUser);
+            usersList.set(profile.id, newUser);
             return done(null,newUser);
         }
     })

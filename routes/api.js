@@ -14,7 +14,7 @@ router.get('/news-flash', async function (req, res) {
 });
 
 
-router.get('/infographics_data', async function (req, res) {
+router.get('/infographics-data', async function (req, res) {
     let dataToSend = null;
     try {
         dataToSend = await controller.getData(req.url, 'infographic');

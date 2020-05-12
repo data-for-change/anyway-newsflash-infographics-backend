@@ -3,23 +3,28 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const passport = require('passport');
+const cookieSession = require('cookie-session');
+const cors  = require('cors');
+const app = express();
+const serverConstants = require('./config/server-constants');
 const passportSetup = require('./config/passport-setup');
+const sessionKeys = passportSetup.isProd() ? process.env.GOOGLE_SECRET : require('./config/keys').session.cookieKey;
+const profileRouter = require('./routes/profile');
+const apiRouter = require('./routes/api');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const authRouter = require('./routes/auth');
-const passport = require('passport');
-const cookieSession = require('cookie-session');
-const sessionKeys = passportSetup.isProd() ? process.env.GOOGLE_SECRET : require('./config/keys').session.cookieKey;
-const profileRouter = require('./routes/profile');
-const cors  = require('cors');
-const apiRouter = require('./routes/api');
-const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-app.use(cors());
+app.use(cors({
+  origin: serverConstants.corsOrigins,
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  credentials: true // allow session cookie from browser to pass through
+}));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

@@ -21,15 +21,15 @@ router.get('/google-login/success', (req, res) => {
     }
 );
 
-router.get('/google-login',passport.authenticate('google', {
+router.get('/google-login',(req,res,next)=> {
+    req.appOrigin = req.get('referrer');
+    next();
+},passport.authenticate('google', {
     scope:['profile']
 }));
 
-router. get('/google-login/redirect',(req,res,next)=> {
-    req.appOrigin  = req.get('referrer');
-    next();
-}, passport.authenticate('google'),(req,res)=>{
-    console.log(`redirect back to ${req.appOrigin}`);
+router. get('/google-login/redirect', passport.authenticate('google'),(req,res)=>{
+    console.log(`redirect back to app origin ${req.appOrigin}`);
     res.redirect(req.appOrigin);
 })
 

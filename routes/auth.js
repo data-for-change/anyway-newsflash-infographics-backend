@@ -29,8 +29,8 @@ router. get('/google-login/redirect',(req,res,next)=> {
     req.appOrigin  = req.get('referrer');
     next();
 }, passport.authenticate('google'),(req,res)=>{
-    console.log(`redirect back to ${req.get('referrer')}`);
-    res.redirect(process.env.APP_URL);
+    console.log(`redirect back to ${req.appOrigin}`);
+    res.redirect(req.appOrigin);
 })
 
 router.get('/logout',(req,res)=> {

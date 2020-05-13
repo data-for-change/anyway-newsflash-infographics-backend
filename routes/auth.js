@@ -18,7 +18,7 @@ router.get('/google-login/success', (req, res) => {
 
         }
     }
-)
+);
 
 router.get('/google-login',passport.authenticate('google', {
     scope:['profile'],
@@ -29,8 +29,9 @@ router. get('/google-login/redirect', passport.authenticate('google',{
     failureRedirect:'/'
 }));
 
-router.get('/logout',(req,res)=>{
-req.logOut();
-res.redirect('/');
+router.get('/logout',(req,res)=> {
+    req.logOut();
+    res.redirect(process.env.APP_URL);
 });
+
 module.exports = router;

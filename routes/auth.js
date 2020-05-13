@@ -26,6 +26,7 @@ router.get('/google-login',passport.authenticate('google', {
 }));
 
 router. get('/google-login/redirect', passport.authenticate('google'),(req,res)=>{
+    console.log(`redirect back to ${req.get('referrer')}`);
     res.redirect(req.get('referrer'));
 })
 

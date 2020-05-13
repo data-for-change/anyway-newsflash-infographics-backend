@@ -31,7 +31,7 @@ router. get('/google-login/redirect', passport.authenticate('google',{
 
 router.get('/logout',(req,res)=> {
     req.logOut();
-    res.redirect(process.env.APP_URL);
+    res.redirect(req.get('referrer'));
 });
 
 module.exports = router;

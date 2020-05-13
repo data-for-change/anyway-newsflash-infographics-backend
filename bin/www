@@ -8,8 +8,6 @@ let dotEnv = require('dotenv').config({ path: `./.env.${process.env.NODE_ENV}`})
 if(dotEnv.error){
     dotEnv = require('dotenv').config({ path: `../.env.${process.env.NODE_ENV}`});
 }
-console.log(process.env.BASE_URL);
-console.log(dotEnv);
 const app = require('../app');
 const debug = require('debug')('anyway-newsflash-infographics-backend:server');
 const http = require('http');

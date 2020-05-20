@@ -22,20 +22,19 @@ router.get('/google-login/success', (req, res) => {
 );
 
 router.get('/google-login',passport.authenticate('google', {
-    scope:['profile']
+    scope:['profile'],
+    display: 'popup',
+    prompt: 'select_account'
 }));
 
 router. get('/google-login/redirect',(req,res,next)=> {
-    req.appOrigin = req.get('referrer');
     next();
 }, passport.authenticate('google'),(req,res)=>{
-    console.log(`redirect back to app origin ${req.appOrigin}`);
-    res.redirect(req.appOrigin);
+    res.redirect(`${process.env.APP_URL}/popup-redirect`);
 })
 
 router.get('/logout',(req,res)=> {
     req.logOut();
-    console.log(`redirect back to ${req.get('referrer')}`);
     res.redirect(req.get('referrer'));
 });
 

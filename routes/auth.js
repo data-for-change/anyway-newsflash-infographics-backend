@@ -21,16 +21,21 @@ router.get('/google-login/success', (req, res) => {
     }
 );
 
-router.get('/google-login',passport.authenticate('google', {
-    scope:['profile'],
-    display: 'popup',
-    prompt: 'select_account'
-}));
+router.get('/google-login', (req, res,next) => {
+    /*set the uri of the origin request the auth and sate that in the state object to be shared trough
+     all the oauth flow*/
+    const state = req.get('referrer');
+    const authenticator = passport.authenticate('google', {
+        scope: ['profile', 'email'],
+        display: 'popup',
+        prompt: 'select_account',
+        state
+    })
+    authenticator(req, res, next);
+});
 
-router. get('/google-login/redirect',(req,res,next)=> {
-    next();
-}, passport.authenticate('google'),(req,res)=>{
-    res.redirect(`${process.env.APP_URL}/popup-redirect`);
+router. get('/google-login/redirect' ,passport.authenticate('google'),(req,res)=>{
+    res.redirect(`${req.query.state}popup-redirect`);
 })
 
 router.get('/logout',(req,res)=> {

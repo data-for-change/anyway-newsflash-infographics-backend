@@ -4,7 +4,10 @@
 /**
  * Module dependencies.
  */
-require('dotenv').config({ path: `../.env.${process.env.NODE_ENV}`});
+let dotEnv = require('dotenv').config({ path: `./.env.${process.env.NODE_ENV}`});
+if(dotEnv.error){
+    dotEnv = require('dotenv').config({ path: `../.env.${process.env.NODE_ENV}`});
+}
 const app = require('../app');
 const debug = require('debug')('anyway-newsflash-infographics-backend:server');
 const http = require('http');
@@ -12,7 +15,7 @@ const http = require('http');
 /**
  * Get port from environment and store in Express.
  */
-const port = normalizePort(process.env.PORT || '3000');
+const port = normalizePort(process.env.PORT || '4000');
 app.set('port', port);
 
 /**
